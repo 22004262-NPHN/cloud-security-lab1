@@ -218,6 +218,92 @@
         <img src="yc3h2.png" alt="" style="width: 900px; height: 500px; display: block; margin: 20px auto;">
     </div>
 
+    <!-- LAB TUẦN 2 – YÊU CẦU 2 -->
+<div class="content">
+    <h2>Lab Tuần 2 – Yêu cầu 2: Mô hình kiểm soát truy cập Zero Trust</h2>
+
+    <p><strong>Công cụ sử dụng:</strong></p>
+    <ul>
+        <li>Website tĩnh đã triển khai ở Lab Tuần 1 (Cloudflare Pages)</li>
+        <li>Cloudflare Zero Trust / Cloudflare Access</li>
+        <li>GitHub (lưu trữ mã nguồn)</li>
+    </ul>
+
+    <p>
+        Trong Lab này, Cloudflare Access được sử dụng để bảo vệ website tĩnh,
+        chỉ cho phép người dùng đã xác thực mới có thể truy cập nội dung website.
+    </p>
+
+    <h3>1. Thiết kế mô hình kiểm soát truy cập (Zero Trust)</h3>
+    <p>
+        Mô hình kiểm soát truy cập được thiết kế theo nguyên lý Zero Trust,
+        trong đó mọi yêu cầu truy cập đều phải được xác thực và kiểm tra quyền.
+    </p>
+
+    <p><strong>Các thành phần trong mô hình:</strong></p>
+    <ul>
+        <li><strong>Người dùng (User / Client):</strong> Trình duyệt web của người truy cập</li>
+        <li><strong>Yêu cầu truy cập:</strong> HTTP/HTTPS request gửi tới website</li>
+        <li><strong>Cloudflare Access / Zero Trust:</strong> Lớp kiểm soát truy cập đứng trước website</li>
+        <li><strong>Authentication:</strong> Xác thực danh tính bằng Google hoặc GitHub</li>
+        <li><strong>Authorization / Policy:</strong> Kiểm tra quyền và điều kiện truy cập</li>
+        <li><strong>Website tĩnh (Cloudflare Pages):</strong> Chỉ truy cập khi vượt qua kiểm tra</li>
+        <li><strong>Kết quả:</strong> Cho phép hoặc từ chối truy cập</li>
+    </ul>
+
+    <h3>2. Thứ tự xử lý khi người dùng truy cập website</h3>
+    <ol>
+        <li>Người dùng nhập URL website trên trình duyệt</li>
+        <li>Trình duyệt gửi HTTPS request tới Cloudflare</li>
+        <li>Cloudflare Access chặn request và kiểm tra danh tính</li>
+        <li>Người dùng được yêu cầu đăng nhập Google hoặc GitHub</li>
+        <li>Cloudflare kiểm tra policy truy cập</li>
+        <li>Nếu hợp lệ → cho phép truy cập website</li>
+        <li>Nếu không hợp lệ → từ chối truy cập</li>
+    </ol>
+
+    <h3>3. Vai trò của Cloudflare Access / Zero Trust</h3>
+    <ul>
+        <li>Đóng vai trò cổng kiểm soát truy cập</li>
+        <li>Thực hiện xác thực danh tính người dùng</li>
+        <li>Áp dụng chính sách IAM và Zero Trust</li>
+        <li>Bảo vệ website khỏi truy cập trái phép</li>
+    </ul>
+
+    <h3>4. Sơ đồ khối mô hình kiểm soát truy cập</h3>
+    <p>
+        Sơ đồ dưới đây mô tả luồng truy cập website được bảo vệ bởi Cloudflare Access
+        theo mô hình Zero Trust.
+    </p>
+
+    <img src="zero-trust-diagram.png" alt="Sơ đồ Zero Trust"
+         style="width: 900px; display: block; margin: 20px auto;">
+
+    <h3>5. Kiểm thử truy cập và ghi nhận hành vi</h3>
+
+    <p><strong>Hành vi khi chưa xác thực:</strong></p>
+    <ul>
+        <li>Người dùng truy cập website sẽ bị chặn</li>
+        <li>Hệ thống chuyển hướng đến trang đăng nhập Cloudflare Access</li>
+    </ul>
+
+    <p><strong>Hành vi khi xác thực sai:</strong></p>
+    <ul>
+        <li>Người dùng không đủ điều kiện truy cập</li>
+        <li>Cloudflare hiển thị thông báo Access Denied</li>
+    </ul>
+
+    <p><strong>Hành vi khi xác thực đúng:</strong></p>
+    <ul>
+        <li>Người dùng đăng nhập thành công bằng Google hoặc GitHub</li>
+        <li>Website được hiển thị bình thường</li>
+    </ul>
+
+    <p>
+        Kết quả cho thấy việc áp dụng Cloudflare Access theo mô hình Zero Trust
+        giúp tăng cường đáng kể mức độ an toàn cho website tĩnh.
+    </p>
+</div>    
 </div>
 
 <footer>
@@ -226,5 +312,6 @@
 
 </body>
 </html>
+
 
 
