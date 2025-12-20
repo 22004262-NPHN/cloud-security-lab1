@@ -3,12 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <title>Triển khai Website Tĩnh với Cloudflare Pages</title>
+
     <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             margin: 0;
             font-family: "Segoe UI", Arial, sans-serif;
             background: #f4f6f8;
             color: #333;
+        }
+
+        nav {
+            position: sticky;
+            top: 0;
+            background: #ffffff;
+            padding: 12px;
+            text-align: center;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            z-index: 100;
+        }
+
+        nav a {
+            text-decoration: none;
+            font-weight: bold;
+            color: #043915;
+            margin: 0 10px;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
         }
 
         header {
@@ -51,8 +77,15 @@
             line-height: 1.7;
         }
 
-        ul {
+        ul, ol {
             margin-left: 20px;
+        }
+
+        img {
+            width: 900px;
+            max-width: 100%;
+            display: block;
+            margin: 20px auto;
         }
 
         footer {
@@ -63,10 +96,13 @@
         }
     </style>
 </head>
+
 <body>
-<nav style="text-align:center; margin:15px;">
-  <a href="index.html">🏠 Lab 1</a> |
-  <a href="lab2.html">🔐 Lab 2</a>
+
+<!-- MENU ĐIỀU HƯỚNG CUỘN -->
+<nav>
+    <a href="#lab1">🏠 Lab 1 – Cloud & CDN</a> |
+    <a href="#lab2">🔐 Lab 2 – Zero Trust</a>
 </nav>
 
 <header>
@@ -80,234 +116,97 @@
 
 <div class="container">
 
-    <!-- YÊU CẦU 1 -->
-    <div class="content">
-        <h2>Yêu cầu 1: Kiến thức cơ bản</h2>
+<!-- ================= LAB 1 ================= -->
+<div class="content" id="lab1">
+    <h2>Lab Tuần 1 – Kiến thức cơ bản Cloud & CDN</h2>
 
-        <p><strong>1. Cloud Computing là gì?</strong><br>
-        Cloud Computing (Điện toán đám mây) là mô hình cung cấp tài nguyên CNTT như máy chủ, lưu trữ,
-        cơ sở dữ liệu, mạng và phần mềm thông qua Internet theo hình thức dịch vụ.
-        Người dùng không cần đầu tư hạ tầng vật lý mà chỉ sử dụng và trả phí theo mức độ dùng.</p>
+    <p><strong>Cloud Computing là gì?</strong><br>
+    Cloud Computing là mô hình cung cấp tài nguyên CNTT qua Internet theo hình thức dịch vụ,
+    giúp người dùng không cần đầu tư hạ tầng vật lý.</p>
 
-        <p><strong>Đặc điểm chính:</strong></p>
-        <ul>
-            <li>Truy cập mọi lúc, mọi nơi qua Internet</li>
-            <li>Mở rộng linh hoạt (scalability)</li>
-            <li>Trả phí theo mức sử dụng (pay-as-you-go)</li>
-            <li>Giảm chi phí vận hành và bảo trì</li>
-        </ul>
+    <ul>
+        <li>Truy cập mọi lúc, mọi nơi</li>
+        <li>Mở rộng linh hoạt</li>
+        <li>Trả phí theo mức sử dụng</li>
+        <li>Giảm chi phí vận hành</li>
+    </ul>
 
-        <p><strong>2. Phân biệt IaaS – PaaS – SaaS</strong></p>
-        <p>
-            IaaS cho phép người dùng quản lý hệ điều hành, ứng dụng và dữ liệu; nhà cung cấp quản lý hạ tầng
-            (ví dụ: AWS EC2, Google Compute). PaaS cho phép người dùng quản lý ứng dụng và dữ liệu, trong khi
-            nền tảng chịu trách nhiệm hạ tầng và môi trường triển khai (ví dụ: Cloudflare Pages, Heroku).
-            SaaS là mô hình người dùng chỉ sử dụng phần mềm, toàn bộ hệ thống do nhà cung cấp quản lý
-            (ví dụ: Gmail, Google Docs).
-        </p>
+    <p><strong>Phân biệt IaaS – PaaS – SaaS</strong></p>
+    <p>
+        Website tĩnh trên Cloudflare Pages thuộc mô hình PaaS vì người dùng chỉ cần quản lý mã nguồn,
+        hạ tầng do Cloudflare đảm nhiệm.
+    </p>
 
-        <p><strong>3. Website tĩnh thuộc mô hình cloud nào?</strong><br>
-        Website tĩnh thuộc mô hình PaaS vì người dùng chỉ cần viết HTML/CSS/JS,
-        không phải quản lý server hay hệ điều hành, toàn bộ quá trình deploy, HTTPS và CDN
-        do nền tảng Cloudflare Pages đảm nhiệm.</p>
+    <p><strong>CDN là gì?</strong></p>
+    <p>
+        CDN giúp phân phối nội dung từ máy chủ gần người dùng nhất,
+        tăng tốc truy cập và giảm rủi ro tấn công DDoS.
+    </p>
 
-        <p><strong>4. Cloudflare Pages hoạt động theo cơ chế gì?</strong></p>
-        <ul>
-            <li>Mã nguồn được lưu trữ trên GitHub</li>
-            <li>Cloudflare Pages kết nối repository</li>
-            <li>Khi có thay đổi, hệ thống tự động build và deploy</li>
-            <li>Nội dung được phân phối qua CDN toàn cầu</li>
-        </ul>
+    <img src="yc1h1.png" alt="CDN demo">
 
-        <p><strong>5. CDN phân phối nội dung ra sao?</strong><br>
-        CDN là mạng lưới máy chủ đặt tại nhiều vị trí địa lý khác nhau. Khi người dùng truy cập website,
-        CDN sẽ chọn máy chủ gần nhất để trả nội dung, giúp tăng tốc độ tải trang, giảm độ trễ,
-        giảm tải server gốc và tăng khả năng chống DDoS.</p>
+    <p><strong>Kiểm tra an toàn</strong></p>
+    <ul>
+        <li>SecurityHeaders: đánh giá HTTP Security Headers</li>
+        <li>PageSpeed Insights: đánh giá hiệu năng</li>
+    </ul>
+</div>
 
-        <p><strong>6. Vai trò của CDN đối với hiệu năng và an toàn</strong></p>
-        <ul>
-            <li>Giảm độ trễ truy cập và tăng tốc độ tải trang</li>
-            <li>Giảm tải cho server gốc</li>
-            <li>Chống DDoS, ẩn IP server gốc</li>
-            <li>Tích hợp HTTPS và tường lửa WAF</li>
-        </ul>
-
-        <p><strong>7. Ví dụ minh họa</strong><br>
-        Người dùng tại Việt Nam truy cập website sẽ được phục vụ nội dung từ máy chủ Cloudflare
-        gần Việt Nam thay vì truy cập trực tiếp server gốc.</p>
-        <img src="yc1h1.png" alt="" style="width: 900px; height: 500px; display: block; margin: 20px auto;">
-
-        <p><strong>8. Rủi ro bảo mật còn tồn tại</strong><br>
-        Website vẫn có thể gặp các rủi ro như thiếu HTTP Security Headers, lộ mã nguồn nhạy cảm
-        trên GitHub, tấn công XSS phía client, cấu hình sai quyền truy cập repository
-        hoặc không kiểm tra bảo mật định kỳ.</p>
-
-        <p><strong>9. Giải pháp</strong></p>
-        <ul>
-            <li>Bật và kiểm tra các HTTP Security Headers</li>
-            <li>Kiểm tra website bằng securityheaders.com và pagespeed.web.dev</li>
-            <li>Không lưu API key, token trong mã nguồn</li>
-            <li>Sử dụng GitHub Private Repository khi cần</li>
-            <li>Kiểm tra định kỳ cấu hình Cloudflare</li>
-        </ul>
-    </div>
-    <div class="content">
-        <h2>Yêu cầu 2: Triển khai website tĩnh với GitHub và Cloudflare Pages</h2>
-    
-        <p><strong>1. GitHub là gì?</strong><br>
-        GitHub là nền tảng lưu trữ và quản lý mã nguồn dựa trên hệ thống Git, cho phép người dùng
-        làm việc nhóm, quản lý phiên bản và lưu trữ các dự án phần mềm, bao gồm cả website tĩnh
-        sử dụng HTML, CSS và JavaScript.
-        </p>
-    
-        <ul>
-            <li>Quản lý source code hiệu quả</li>
-            <li>Hỗ trợ làm việc nhóm và kiểm soát phiên bản</li>
-            <li>Lưu trữ website tĩnh (HTML, CSS, JS)</li>
-            <li>Kết nối với các dịch vụ triển khai tự động (CI/CD)</li>
-        </ul>
-    
-        <p>
-            Trong bài này, GitHub được sử dụng để lưu trữ mã nguồn website tĩnh và làm nguồn
-            dữ liệu đầu vào cho Cloudflare Pages.
-        </p>
-    
-        <p><strong>2. Cloudflare Pages là gì?</strong><br>
-        Cloudflare Pages là dịch vụ triển khai website tĩnh theo mô hình PaaS, cho phép kết nối
-        trực tiếp với GitHub để tự động build và deploy website.
-        </p>
-    
-        <ul>
-            <li>Triển khai (deploy) website tĩnh nhanh chóng</li>
-            <li>Tích hợp trực tiếp với GitHub</li>
-            <li>Sử dụng CDN toàn cầu của Cloudflare</li>
-            <li>Miễn phí cho dự án nhỏ, HTTPS tự động</li>
-        </ul>
-    
-        <p>
-            Cloudflare Pages đóng vai trò đưa website từ GitHub lên Internet, đảm bảo tốc độ truy cập cao,
-            độ ổn định tốt và tăng cường bảo mật cho website.
-        </p>
-    </div>
-    
-    <!-- YÊU CẦU 3 -->
-    <div class="content">
-        <h2>Yêu cầu 3: Kiểm tra an toàn và đánh giá website</h2>
-
-        <p><strong>1. Kiểm tra an toàn website bằng SecurityHeaders</strong><br>
-        Công cụ SecurityHeaders được sử dụng để đánh giá mức độ an toàn của website
-        thông qua các HTTP Security Headers.</p>
-
-        <p><strong>Quy trình thực hiện:</strong></p>
-        <ul>
-            <li>Truy cập website securityheaders.com</li>
-            <li>Nhập URL website đã deploy trên Cloudflare Pages</li>
-            <li>Hệ thống tự động quét và chấm điểm bảo mật</li>
-        </ul>
-        <p><strong>Các header quan trọng:</strong> CSP, HSTS, X-Frame-Options,
-        X-Content-Type-Options và Referrer-Policy.</p>
-        <img src="Scan result.png" alt="" style="width: 900px; height: 500px; display: block; margin: 20px auto;">
-        <p><strong>2. Đánh giá hiệu năng bằng PageSpeed Insights</strong><br>
-        PageSpeed Insights dùng để đánh giá tốc độ tải trang và trải nghiệm người dùng.</p>
-
-        <p><strong>Quy trình:</strong></p>
-        <ul>
-            <li>Truy cập pagespeed.web.dev</li>
-            <li>Nhập URL website</li>
-            <li>Phân tích trên hai môi trường Mobile và Desktop</li>
-        </ul>
-
-        <p><strong>Các chỉ số quan trọng:</strong> Performance, FCP, LCP, CLS và TTI.
-        Điểm số cao cho thấy website tải nhanh, ổn định và thân thiện với người dùng.</p>
-        <img src="yc3h2.png" alt="" style="width: 900px; height: 500px; display: block; margin: 20px auto;">
-    </div>
-
-    <!-- LAB TUẦN 2 – YÊU CẦU 2 -->
-<div class="content">
-    <h2>Lab Tuần 2 – Yêu cầu 2: Mô hình kiểm soát truy cập Zero Trust</h2>
+<!-- ================= LAB 2 ================= -->
+<div class="content" id="lab2">
+    <h2>Lab Tuần 2 – Mô hình kiểm soát truy cập Zero Trust</h2>
 
     <p><strong>Công cụ sử dụng:</strong></p>
     <ul>
-        <li>Website tĩnh đã triển khai ở Lab Tuần 1 (Cloudflare Pages)</li>
-        <li>Cloudflare Zero Trust / Cloudflare Access</li>
-        <li>GitHub (lưu trữ mã nguồn)</li>
+        <li>Cloudflare Pages</li>
+        <li>Cloudflare Zero Trust / Access</li>
+        <li>GitHub</li>
     </ul>
 
     <p>
-        Trong Lab này, Cloudflare Access được sử dụng để bảo vệ website tĩnh,
-        chỉ cho phép người dùng đã xác thực mới có thể truy cập nội dung website.
+        Cloudflare Access được triển khai để bảo vệ website tĩnh,
+        yêu cầu người dùng phải xác thực trước khi truy cập.
     </p>
 
-    <h3>1. Thiết kế mô hình kiểm soát truy cập (Zero Trust)</h3>
+    <h3>Mô hình Zero Trust</h3>
     <p>
-        Mô hình kiểm soát truy cập được thiết kế theo nguyên lý Zero Trust,
-        trong đó mọi yêu cầu truy cập đều phải được xác thực và kiểm tra quyền.
+        Zero Trust hoạt động theo nguyên lý
+        <strong>“Không tin tưởng mặc định – Luôn xác minh”</strong>.
     </p>
 
-    <p><strong>Các thành phần trong mô hình:</strong></p>
     <ul>
-        <li><strong>Người dùng (User / Client):</strong> Trình duyệt web của người truy cập</li>
-        <li><strong>Yêu cầu truy cập:</strong> HTTP/HTTPS request gửi tới website</li>
-        <li><strong>Cloudflare Access / Zero Trust:</strong> Lớp kiểm soát truy cập đứng trước website</li>
-        <li><strong>Authentication:</strong> Xác thực danh tính bằng Google hoặc GitHub</li>
-        <li><strong>Authorization / Policy:</strong> Kiểm tra quyền và điều kiện truy cập</li>
-        <li><strong>Website tĩnh (Cloudflare Pages):</strong> Chỉ truy cập khi vượt qua kiểm tra</li>
-        <li><strong>Kết quả:</strong> Cho phép hoặc từ chối truy cập</li>
+        <li>Người dùng gửi HTTPS request</li>
+        <li>Cloudflare Access chặn và kiểm tra</li>
+        <li>Xác thực bằng Google hoặc GitHub</li>
+        <li>Áp dụng policy truy cập</li>
+        <li>Cho phép hoặc từ chối truy cập</li>
     </ul>
 
-    <h3>2. Thứ tự xử lý khi người dùng truy cập website</h3>
-    <ol>
-        <li>Người dùng nhập URL website trên trình duyệt</li>
-        <li>Trình duyệt gửi HTTPS request tới Cloudflare</li>
-        <li>Cloudflare Access chặn request và kiểm tra danh tính</li>
-        <li>Người dùng được yêu cầu đăng nhập Google hoặc GitHub</li>
-        <li>Cloudflare kiểm tra policy truy cập</li>
-        <li>Nếu hợp lệ → cho phép truy cập website</li>
-        <li>Nếu không hợp lệ → từ chối truy cập</li>
-    </ol>
+    <img src="zero-trust-diagram.png" alt="Zero Trust Diagram">
 
-    <h3>3. Vai trò của Cloudflare Access / Zero Trust</h3>
+    <h3>Kiểm thử hành vi truy cập</h3>
+
+    <p><strong>Chưa xác thực:</strong></p>
     <ul>
-        <li>Đóng vai trò cổng kiểm soát truy cập</li>
-        <li>Thực hiện xác thực danh tính người dùng</li>
-        <li>Áp dụng chính sách IAM và Zero Trust</li>
-        <li>Bảo vệ website khỏi truy cập trái phép</li>
+        <li>Bị chuyển hướng tới trang đăng nhập Cloudflare Access</li>
     </ul>
 
-    <h3>4. Sơ đồ khối mô hình kiểm soát truy cập</h3>
-    <p>
-        Sơ đồ dưới đây mô tả luồng truy cập website được bảo vệ bởi Cloudflare Access
-        theo mô hình Zero Trust.
-    </p>
-
-    <img src="zero-trust-diagram.png" alt="Sơ đồ Zero Trust"
-         style="width: 900px; display: block; margin: 20px auto;">
-
-    <h3>5. Kiểm thử truy cập và ghi nhận hành vi</h3>
-
-    <p><strong>Hành vi khi chưa xác thực:</strong></p>
+    <p><strong>Xác thực sai:</strong></p>
     <ul>
-        <li>Người dùng truy cập website sẽ bị chặn</li>
-        <li>Hệ thống chuyển hướng đến trang đăng nhập Cloudflare Access</li>
+        <li>Hiển thị thông báo Access Denied</li>
     </ul>
 
-    <p><strong>Hành vi khi xác thực sai:</strong></p>
+    <p><strong>Xác thực đúng:</strong></p>
     <ul>
-        <li>Người dùng không đủ điều kiện truy cập</li>
-        <li>Cloudflare hiển thị thông báo Access Denied</li>
-    </ul>
-
-    <p><strong>Hành vi khi xác thực đúng:</strong></p>
-    <ul>
-        <li>Người dùng đăng nhập thành công bằng Google hoặc GitHub</li>
         <li>Website được hiển thị bình thường</li>
     </ul>
 
     <p>
-        Kết quả cho thấy việc áp dụng Cloudflare Access theo mô hình Zero Trust
-        giúp tăng cường đáng kể mức độ an toàn cho website tĩnh.
+        Kết quả cho thấy Cloudflare Access giúp kiểm soát truy cập hiệu quả,
+        nâng cao đáng kể mức độ an toàn cho website tĩnh.
     </p>
-</div>    
+</div>
+
 </div>
 
 <footer>
@@ -316,7 +215,3 @@
 
 </body>
 </html>
-
-
-
-
