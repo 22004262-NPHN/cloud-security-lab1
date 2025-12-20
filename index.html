@@ -214,23 +214,124 @@
 
 <!-- ================= LAB 2 ================= -->
 <div class="content" id="lab2">
-    <h2>Lab Tuần 2 – Mô hình kiểm soát truy cập Zero Trust</h2>
+    <h2>Lab Tuần 2 – Zero Trust & Kiểm soát truy cập</h2>
+
+    <h3>I. Yêu cầu 1: Kiến thức nền tảng</h3>
+
+    <p><strong>1. Authentication vs Authorization</strong></p>
+
+    <p><strong>Authentication (Xác thực)</strong><br>
+    Là quá trình xác minh danh tính của người dùng, đảm bảo người truy cập đúng là người họ khai báo.
+    Các phương pháp phổ biến gồm username/password, MFA, sinh trắc học (vân tay, khuôn mặt).</p>
+
+    <p><strong>Authorization (Phân quyền)</strong><br>
+    Là quá trình cấp quyền sau khi xác thực thành công, xác định người dùng được phép truy cập
+    tài nguyên hoặc thực hiện hành động nào trong hệ thống.</p>
+
+    <p><strong>Ví dụ:</strong><br>
+    Đăng nhập thành công là Authentication, còn việc cho phép xem, sửa hay xóa dữ liệu là Authorization.</p>
+
+    <h3>2. Identity and Access Management (IAM)</h3>
 
     <p>
-        Cloudflare Access được triển khai để bảo vệ website tĩnh,
-        chỉ cho phép người dùng đã xác thực bằng Google hoặc GitHub
+        IAM (Identity and Access Management) là tập hợp các chính sách, quy trình và công cụ
+        dùng để quản lý danh tính và quyền truy cập của người dùng vào tài nguyên hệ thống.
+    </p>
+
+    <p><strong>Vai trò của IAM trong Cloud:</strong></p>
+    <ul>
+        <li>Quản lý người dùng và danh tính</li>
+        <li>Kiểm soát quyền truy cập tài nguyên cloud</li>
+        <li>Hạn chế truy cập trái phép</li>
+        <li>Hỗ trợ MFA và phân quyền chi tiết</li>
+    </ul>
+
+    <h3>3. Zero Trust Security Model</h3>
+
+    <p>
+        Zero Trust là mô hình bảo mật với nguyên tắc
+        <strong>“Không tin tưởng bất kỳ ai – Always Verify”</strong>,
+        kể cả người dùng nội bộ.
+    </p>
+
+    <p><strong>Nguyên lý Zero Trust:</strong></p>
+    <ol>
+        <li>Không mặc định tin cậy bất kỳ ai</li>
+        <li>Xác thực và phân quyền cho mọi yêu cầu</li>
+        <li>Phân quyền tối thiểu (Least Privilege)</li>
+        <li>Giám sát và đánh giá liên tục</li>
+    </ol>
+
+    <h3>II. Yêu cầu 3: Phân tích rủi ro truy cập website</h3>
+
+    <p><strong>1. Website public hoàn toàn</strong></p>
+    <ul>
+        <li>Dễ bị tấn công DDoS</li>
+        <li>Bề mặt tấn công rộng (XSS, SQL Injection)</li>
+        <li>Nguy cơ rò rỉ dữ liệu nếu cấu hình sai</li>
+    </ul>
+
+    <p><strong>2. Website có IAM</strong></p>
+    <ul>
+        <li>Nguy cơ đánh cắp thông tin đăng nhập</li>
+        <li>Phân quyền sai dẫn đến leo thang đặc quyền</li>
+        <li>Tấn công từ người dùng nội bộ</li>
+    </ul>
+
+    <p><strong>3. Website có IAM nhưng không Zero Trust</strong></p>
+    <ul>
+        <li>Tin cậy quá mức sau khi đăng nhập</li>
+        <li>Dễ bị di chuyển ngang trong hệ thống</li>
+        <li>Không kiểm soát thiết bị và ngữ cảnh</li>
+    </ul>
+
+    <h3>III. So sánh mô hình bảo mật</h3>
+
+    <table style="width:100%; border-collapse: collapse;">
+        <tr style="background:#f0f0f0;">
+            <th style="border:1px solid #ccc; padding:8px;">Tiêu chí</th>
+            <th style="border:1px solid #ccc; padding:8px;">Truyền thống</th>
+            <th style="border:1px solid #ccc; padding:8px;">Zero Trust</th>
+        </tr>
+        <tr>
+            <td style="border:1px solid #ccc; padding:8px;">Nguyên tắc tin cậy</td>
+            <td style="border:1px solid #ccc; padding:8px;">Tin cậy nội bộ</td>
+            <td style="border:1px solid #ccc; padding:8px;">Không tin cậy ai</td>
+        </tr>
+        <tr>
+            <td style="border:1px solid #ccc; padding:8px;">Xác thực</td>
+            <td style="border:1px solid #ccc; padding:8px;">Một lần</td>
+            <td style="border:1px solid #ccc; padding:8px;">Liên tục</td>
+        </tr>
+        <tr>
+            <td style="border:1px solid #ccc; padding:8px;">Phân quyền</td>
+            <td style="border:1px solid #ccc; padding:8px;">Rộng</td>
+            <td style="border:1px solid #ccc; padding:8px;">Tối thiểu</td>
+        </tr>
+        <tr>
+            <td style="border:1px solid #ccc; padding:8px;">Phù hợp Cloud</td>
+            <td style="border:1px solid #ccc; padding:8px;">Không</td>
+            <td style="border:1px solid #ccc; padding:8px;">Rất phù hợp</td>
+        </tr>
+    </table>
+
+    <h3>IV. Áp dụng Zero Trust với Cloudflare Access</h3>
+
+    <p>
+        Cloudflare Access được sử dụng để bảo vệ website tĩnh,
+        chỉ cho phép người dùng đã xác thực (Google/GitHub)
         mới có thể truy cập nội dung.
     </p>
 
-    <h3>Hành vi truy cập</h3>
     <ul>
-        <li><strong>Chưa xác thực:</strong> Bị chuyển hướng tới trang đăng nhập Cloudflare Access</li>
-        <li><strong>Xác thực sai:</strong> Hiển thị thông báo Access Denied</li>
-        <li><strong>Xác thực đúng:</strong> Website hiển thị bình thường</li>
+        <li><strong>Chưa đăng nhập:</strong> Chuyển hướng đến trang xác thực</li>
+        <li><strong>Đăng nhập sai:</strong> Access Denied</li>
+        <li><strong>Đăng nhập đúng:</strong> Website hiển thị</li>
     </ul>
 
     <img src="zero-trust-diagram.png" alt="Sơ đồ Zero Trust">
 </div>
+
 
 </div>
 
@@ -240,3 +341,4 @@
 
 </body>
 </html>
+
