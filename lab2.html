@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Lab Tuần 2 - IAM & Zero Trust</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      margin: 40px;
+      background: #f8f9fa;
+      color: #212529;
+      line-height: 1.6;
+    }
+
+    nav {
+      margin-bottom: 20px;
+    }
+
+    nav a {
+      text-decoration: none;
+      margin-right: 15px;
+      font-weight: bold;
+      color: #0d6efd;
+    }
+
+    h1, h2, h3 {
+      color: #0b5ed7;
+    }
+
+    section {
+      background: #ffffff;
+      padding: 20px;
+      margin-bottom: 25px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    }
+
+    ul {
+      margin-left: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    table, th, td {
+      border: 1px solid #dee2e6;
+    }
+
+    th {
+      background: #e9ecef;
+    }
+
+    th, td {
+      padding: 10px;
+      text-align: left;
+    }
+
+    img {
+      max-width: 100%;
+      margin-top: 10px;
+      border: 1px solid #ccc;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      font-style: italic;
+      color: #6c757d;
+    }
+  </style>
+</head>
+
+<body>
+
+<nav>
+  <a href="index.html">🏠 Lab 1 - Cloud & CDN</a>
+  <a href="lab2.html">🔐 Lab 2 - IAM & Zero Trust</a>
+</nav>
+
+<h1>LAB TUẦN 2 – QUẢN LÝ TRUY CẬP, IAM & ZERO TRUST</h1>
+
+<section>
+  <h2>1. Authentication (Xác thực)</h2>
+  <p>
+    Authentication là quá trình xác minh danh tính người dùng trước khi cho phép truy cập hệ thống.
+    Quá trình này thường dựa trên thông tin đăng nhập như tài khoản Google, GitHub hoặc mật khẩu.
+  </p>
+</section>
+
+<section>
+  <h2>2. Authorization (Phân quyền)</h2>
+  <p>
+    Authorization là quá trình xác định người dùng đã xác thực có được phép truy cập tài nguyên hay không.
+    Việc phân quyền giúp giới hạn quyền truy cập đúng đối tượng.
+  </p>
+</section>
+
+<section>
+  <h2>3. Identity & Access Management (IAM)</h2>
+  <p>
+    IAM là hệ thống quản lý danh tính và quyền truy cập trong môi trường Cloud, giúp:
+  </p>
+  <ul>
+    <li>Quản lý người dùng và danh tính</li>
+    <li>Kiểm soát quyền truy cập tài nguyên</li>
+    <li>Giảm thiểu rủi ro truy cập trái phép</li>
+  </ul>
+</section>
+
+<section>
+  <h2>4. Mô hình bảo mật Zero Trust</h2>
+  <p>
+    Zero Trust là mô hình bảo mật với nguyên lý:
+    <strong>“Không tin tưởng mặc định – Luôn luôn xác minh”</strong>.
+  </p>
+  <ul>
+    <li>Mọi truy cập đều phải xác thực</li>
+    <li>Không phân biệt mạng nội bộ hay bên ngoài</li>
+    <li>Kiểm tra danh tính, thiết bị và chính sách truy cập</li>
+  </ul>
+</section>
+
+<section>
+  <h2>5. Mô hình kiểm soát truy cập Cloudflare Access</h2>
+  <p>
+    Cloudflare Access đóng vai trò lớp trung gian giữa người dùng và website,
+    thực hiện xác thực và kiểm tra quyền trước khi cho phép truy cập.
+  </p>
+
+  <img src="assets/images/zero-trust-diagram.png" alt="Sơ đồ Zero Trust">
+
+  <ol>
+    <li>Người dùng gửi HTTPS request</li>
+    <li>Cloudflare Access chặn và kiểm tra request</li>
+    <li>Yêu cầu đăng nhập (Google/GitHub)</li>
+    <li>Áp dụng chính sách IAM</li>
+    <li>Cho phép hoặc từ chối truy cập</li>
+  </ol>
+</section>
+
+<section>
+  <h2>6. Kiểm thử hành vi truy cập</h2>
+  <table>
+    <tr>
+      <th>Trạng thái</th>
+      <th>Kết quả</th>
+    </tr>
+    <tr>
+      <td>Chưa xác thực</td>
+      <td>Bị chuyển hướng đến trang đăng nhập Cloudflare Access</td>
+    </tr>
+    <tr>
+      <td>Xác thực sai</td>
+      <td>Access Denied</td>
+    </tr>
+    <tr>
+      <td>Xác thực đúng</td>
+      <td>Cho phép truy cập website</td>
+    </tr>
+  </table>
+</section>
+
+<section>
+  <h2>7. Phân tích rủi ro an toàn</h2>
+
+  <h3>Website public hoàn toàn</h3>
+  <ul>
+    <li>Dễ bị scan và dò tìm lỗ hổng</li>
+    <li>Không kiểm soát người truy cập</li>
+    <li>Dễ bị tấn công brute-force</li>
+  </ul>
+
+  <h3>Website có IAM nhưng không Zero Trust</h3>
+  <ul>
+    <li>Tin cậy mạng nội bộ</li>
+    <li>Dễ bị tấn công lan truyền nội bộ</li>
+    <li>Kiểm soát truy cập chưa toàn diện</li>
+  </ul>
+
+  <h3>Website áp dụng Zero Trust</h3>
+  <ul>
+    <li>Xác thực mọi truy cập</li>
+    <li>Giảm thiểu rủi ro truy cập trái phép</li>
+    <li>Tăng cường bảo mật tổng thể</li>
+  </ul>
+</section>
+
+<footer>
+  Lab Tuần 2 – An toàn điện toán đám mây
+</footer>
+
+</body>
+</html>
