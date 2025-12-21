@@ -6,7 +6,6 @@
 
 <style>
 html { scroll-behavior: smooth; }
-
 body {
     margin: 0;
     font-family: "Segoe UI", Arial, sans-serif;
@@ -14,7 +13,7 @@ body {
     color: #333;
 }
 
-/* ===== SIDEBAR (TAB MENU) ===== */
+/* ===== SIDEBAR ===== */
 nav {
     position: fixed;
     top: 0;
@@ -23,13 +22,10 @@ nav {
     height: 100vh;
     background: #043915;
     padding-top: 70px;
-    transition: all 0.3s ease;
+    transition: 0.3s;
     z-index: 1000;
 }
-
-nav.hide {
-    transform: translateX(-230px);
-}
+nav.hide { transform: translateX(-230px); }
 
 nav button {
     width: 100%;
@@ -42,13 +38,12 @@ nav button {
     text-align: left;
     cursor: pointer;
 }
-
 nav button:hover,
 nav button.active {
-    background: rgba(255,255,255,0.18);
+    background: rgba(255,255,255,0.2);
 }
 
-/* ===== TOGGLE BUTTON ===== */
+/* ===== TOGGLE ===== */
 .toggle-btn {
     position: fixed;
     top: 15px;
@@ -69,82 +64,47 @@ header {
     top: 0;
     left: 230px;
     right: 0;
-    background: linear-gradient(135deg, #043915, #0a5c2c);
-    color: white;
+    background: linear-gradient(135deg,#043915,#0a5c2c);
+    color: #fff;
     padding: 40px 15px;
     text-align: center;
-    transition: all 0.3s ease;
+    transition: 0.3s;
     z-index: 900;
 }
+header h1 { margin: 0; font-size: 34px; }
+header.shrink { padding: 15px; }
+header.shrink h1 { font-size: 22px; }
+header.full { left: 0; }
 
-header h1 {
-    margin: 0;
-    font-size: 34px;
-}
-
-header.shrink {
-    padding: 15px;
-}
-
-header.shrink h1 {
-    font-size: 22px;
-}
-
-header.full {
-    left: 0;
-}
-
-/* ===== MAIN CONTENT ===== */
+/* ===== CONTENT ===== */
 .container {
     margin-top: 140px;
     margin-left: 260px;
     padding: 20px;
     max-width: 1000px;
-    transition: all 0.3s ease;
+    transition: 0.3s;
 }
+.container.full { margin-left: 40px; }
 
-.container.full {
-    margin-left: 40px;
-}
+.tab-content { display: none; }
+.tab-content.active { display: block; }
 
-/* ===== TAB CONTENT ===== */
-.tab-content {
-    display: none;
-}
-
-.tab-content.active {
-    display: block;
-}
-
-/* ===== BOX ===== */
 .content {
-    background: #ffffff;
+    background: #fff;
     padding: 30px;
     border-radius: 12px;
     box-shadow: 0 6px 15px rgba(0,0,0,0.08);
     margin-bottom: 35px;
 }
-
 .content h2 {
     color: #0a5c2c;
     border-left: 5px solid #0a5c2c;
     padding-left: 12px;
 }
+.content h3 { color: #043915; margin-top: 25px; }
+.content p { line-height: 1.75; text-align: justify; }
 
-.content h3 {
-    color: #043915;
-    margin-top: 25px;
-}
-
-.content p {
-    line-height: 1.75;
-    text-align: justify;
-}
-
-ul, ol {
-    margin-left: 25px;
-    line-height: 1.7;
-}
+ul, ol { margin-left: 25px; line-height: 1.7; }
 
 img {
     width: 900px;
@@ -152,7 +112,6 @@ img {
     display: block;
     margin: 25px auto;
     border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
 /* ===== FOOTER ===== */
@@ -161,15 +120,11 @@ footer {
     padding: 18px;
     font-size: 14px;
     color: #777;
-    background: #ffffff;
-    box-shadow: 0 -2px 6px rgba(0,0,0,0.05);
+    background: #fff;
     margin-left: 230px;
-    transition: all 0.3s ease;
+    transition: 0.3s;
 }
-
-footer.full {
-    margin-left: 0;
-}
+footer.full { margin-left: 0; }
 </style>
 </head>
 
@@ -178,18 +133,18 @@ footer.full {
 <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
 
 <nav id="sidebar">
-    <button class="tab-btn active" onclick="openTab('members')">👥 Thành viên</button>
-    <button class="tab-btn" onclick="openTab('lab1')">☁️ Lab 1 – Cloud & CDN</button>
-    <button class="tab-btn" onclick="openTab('lab2')">🔐 Lab 2 – Zero Trust</button>
+    <button class="tab-btn active" onclick="openTab('members', this)">👥 Thành viên</button>
+    <button class="tab-btn" onclick="openTab('lab1', this)">☁️ Lab 1 – Cloud & CDN</button>
+    <button class="tab-btn" onclick="openTab('lab2', this)">🔐 Lab 2 – Zero Trust</button>
 </nav>
 
 <header id="header">
-    <h1>LAB AN TOÀN ĐIỆN TOÁN ĐÁM MÂY</h1>
+<h1>LAB AN TOÀN ĐIỆN TOÁN ĐÁM MÂY</h1>
 </header>
 
 <div class="container" id="container">
 
-<!-- TAB: MEMBERS -->
+<!-- ===== MEMBERS ===== -->
 <div id="members" class="tab-content active">
 <div class="content">
 <h2>Thông tin thành viên nhóm</h2>
@@ -201,7 +156,7 @@ footer.full {
 </div>
 </div>
 
-<!-- TAB: LAB 1 -->
+<!-- ===== LAB 1 ===== -->
 <div id="lab1" class="tab-content">
 <div class="content">
 <h2>Lab Tuần 1 – Triển khai Website Tĩnh với Cloudflare Pages</h2>
@@ -325,8 +280,9 @@ footer.full {
         <a href="https://pagespeed.web.dev" target="_blank">Kiểm tra Security Headers</a>
         <img src="yc3h2.png" alt="PageSpeed">
 </div>
+</div>
 
-<!-- TAB: LAB 2 -->
+<!-- ===== LAB 2 ===== -->
 <div id="lab2" class="tab-content">
 <div class="content">
 <h2>Lab Tuần 2 – Zero Trust & Kiểm soát truy cập</h2>
@@ -380,11 +336,11 @@ footer.full {
 
         <h3>III. So sánh mô hình bảo mật</h3>
 
-        <table style="width:100%; border-collapse: collapse;">
+        <table style="width:100%; border-collapse: collapse; text-align: center;">
             <tr style="background:#f0f0f0;">
                 <th style="border:1px solid #ccc; padding:8px;">Tiêu chí</th>
-                <th style="border:1px solid #ccc; padding:8px;">Truyền thống</th>
-                <th style="border:1px solid #ccc; padding:8px;">Zero Trust</th>
+                <th style="border:1px solid #ccc; padding:8px;">Mô hình bảo mật mạng truyền thống</th>
+                <th style="border:1px solid #ccc; padding:8px;">Mô hình Zero Trust trong môi trường Cloud</th>
             </tr>
             <tr>
                 <td style="border:1px solid #ccc; padding:8px;">Nguyên tắc</td>
@@ -423,13 +379,15 @@ footer.full {
 </footer>
 
 <script>
-/* Shrink header */
+const sidebar = document.getElementById("sidebar");
+const container = document.getElementById("container");
+const header = document.getElementById("header");
+const footer = document.getElementById("footer");
+
 window.addEventListener("scroll", () => {
-    document.getElementById("header")
-        .classList.toggle("shrink", window.scrollY > 80);
+    header.classList.toggle("shrink", window.scrollY > 80);
 });
 
-/* Toggle sidebar */
 function toggleSidebar() {
     sidebar.classList.toggle("hide");
     container.classList.toggle("full");
@@ -437,13 +395,12 @@ function toggleSidebar() {
     footer.classList.toggle("full");
 }
 
-/* Tab switching */
-function openTab(tabId) {
-    document.querySelectorAll(".tab-content").forEach(tab => tab.classList.remove("active"));
-    document.querySelectorAll(".tab-btn").forEach(btn => btn.classList.remove("active"));
-
-    document.getElementById(tabId).classList.add("active");
-    event.target.classList.add("active");
+function openTab(id, btn) {
+    document.querySelectorAll(".tab-content").forEach(t => t.classList.remove("active"));
+    document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+    document.getElementById(id).classList.add("active");
+    btn.classList.add("active");
+    window.scrollTo({ top: 0, behavior: "smooth" });
 }
 </script>
 
